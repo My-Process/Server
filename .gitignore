@@ -1,3 +1,10 @@
+# Custom Directories
+/public/css
+/public/js
+/public/sass
+.php-cs-fixer.cache
+
+# Default Directories
 /node_modules
 /public/hot
 /public/storage
