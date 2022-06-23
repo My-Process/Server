@@ -2,21 +2,14 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * The database schema.
-     *
-     * @var \Illuminate\Database\Schema\Builder
-     */
-    protected $schema;
+return new class () extends Migration {
+    protected Builder $schema;
 
     /**
      * Create a new migration instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -25,20 +18,16 @@ return new class extends Migration
 
     /**
      * Get the migration connection name.
-     *
-     * @return string|null
      */
-    public function getConnection()
+    public function getConnection(): string|null
     {
         return config('telescope.storage.database.connection');
     }
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $this->schema->create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
@@ -77,10 +66,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $this->schema->dropIfExists('telescope_entries_tags');
         $this->schema->dropIfExists('telescope_entries');

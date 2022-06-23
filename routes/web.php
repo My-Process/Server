@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/********* Authentication Routes *********/
+require __DIR__.'/auth.php';
+
+/********* Authentication API Routes *********/
+require __DIR__.'/auth-api.php';
+
+/********* System Routes *********/
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
