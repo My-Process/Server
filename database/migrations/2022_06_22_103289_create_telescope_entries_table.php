@@ -6,15 +6,10 @@ use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    /**
-     * @var Illuminate\Database\Schema\Builder;
-     */
     protected Builder $schema;
 
     /**
      * Create a new migration instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -23,8 +18,6 @@ return new class () extends Migration {
 
     /**
      * Get the migration connection name.
-     *
-     * @return string|null
      */
     public function getConnection(): string|null
     {
@@ -33,8 +26,6 @@ return new class () extends Migration {
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -75,8 +66,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
