@@ -34,7 +34,7 @@ class Permission extends Model
     public static function existsOnCache(string $permission)
     {
         return self::getAllFromCache()->filter(function ($value) use ($permission) {
-            return is_numeric($permission) ? $value->id == (int)$permission : $value->name == $permission || $value->slug == $permission;
+            return is_numeric($permission) ? $value->id == (int) $permission : $value->name == $permission || $value->slug == $permission;
         })->isNotEmpty();
     }
 }
