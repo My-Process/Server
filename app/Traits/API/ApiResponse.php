@@ -7,8 +7,8 @@ use Illuminate\Http\Response;
 
 trait ApiResponse
 {
-    /** Generate Response Data Array */
-    protected function generateData(mixed $data, string $message, int $statusCode): array
+    /** Generate Response Data Array **/
+    protected function generateData(mixed $data, string|null $message, int $statusCode): array
     {
         if (!$message) {
             $message = Response::$statusTexts[$statusCode];
@@ -20,73 +20,115 @@ trait ApiResponse
         ];
     }
 
-    /** Generic message for successful Responses */
-    public function successResponse(mixed $data = [], string $message = '', int $statusCode = Response::HTTP_OK): JsonResponse
+    /** Generic message for successful Responses **/
+    public function successResponse(mixed $data = [], string $message = null, int $statusCode = Response::HTTP_OK): JsonResponse
     {
         $data = $this->generateData($data, $message, $statusCode);
 
         return new JsonResponse($data, $statusCode);
     }
 
-    /** Generic message for unsuccessful Responses */
-    public function errorResponse(mixed $data = [], string $message = '', int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
+    /** Generic message for unsuccessful Responses **/
+    public function errorResponse(mixed $data = [], string $message = null, int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
         $data = $this->generateData($data, $message, $statusCode);
 
         return new JsonResponse($data, $statusCode);
     }
 
-    /** Message for Ok Response */
-    public function okResponse(mixed $data, string $message = ''): JsonResponse
+    /*
+    |--------------------------------------------------------------------------
+    | Success Responses
+    |--------------------------------------------------------------------------
+    */
+
+    /** Status 200 **/
+    public function okResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->successResponse($data, $message);
+        return $this->successResponse($data, $message, Response::HTTP_OK);
     }
 
-    /** Message for Created Response */
-    public function createdResponse(mixed $data, string $message = ''): JsonResponse
+    /** Status 201 **/
+    public function createdResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->successResponse($data, $message, Response::HTTP_CREATED);
     }
 
-    /** Message for No Content Response */
-    public function noContentResponse(string $message = ''): JsonResponse
+    /** Status 204 **/
+    public function noContentResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->successResponse([], $message, Response::HTTP_NO_CONTENT);
+        return $this->successResponse($data, $message, Response::HTTP_NO_CONTENT);
     }
 
-    /** Message for Bad Request Response */
-    public function badRequestResponse(string $message = '', mixed $data = []): JsonResponse
+    /*
+    |--------------------------------------------------------------------------
+    | Client Error Responses
+    |--------------------------------------------------------------------------
+    */
+
+    /** Status 302 **/
+    public function foundResponse(string $message = null, mixed $data = []): JsonResponse
+    {
+        return $this->errorResponse($data, $message, Response::HTTP_FOUND);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client Error Responses
+    |--------------------------------------------------------------------------
+    */
+
+    /** Status 400 **/
+    public function badRequestResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_BAD_REQUEST);
     }
 
-    /** Message for Unauthorized Response */
-    public function unauthorizedResponse(string $message = '', mixed $data = []): JsonResponse
+    /** Status 401 **/
+    public function unauthorizedResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_UNAUTHORIZED);
     }
 
-    /** Message for Forbidden Response */
-    public function forbiddenResponse(string $message = '', mixed $data = []): JsonResponse
+    /** Status 403 **/
+    public function forbiddenResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_FORBIDDEN);
     }
 
-    /** Message for Not Found Response */
-    public function notFoundResponse(string $message = '', mixed $data = []): JsonResponse
+    /** Status 404 **/
+    public function notFoundResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_NOT_FOUND);
     }
 
-    /** Message for Conflict Response */
-    public function conflictResponse(string $message = '', mixed $data = []): JsonResponse
+    /** Status 405 **/
+    public function methodNotAllowedResponse(string $message = null, mixed $data = []): JsonResponse
+    {
+        return $this->errorResponse($data, $message, Response::HTTP_METHOD_NOT_ALLOWED);
+    }
+
+    /** Status 409 **/
+    public function conflictResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_CONFLICT);
     }
 
-    /** Message for Unprocessable Response */
-    public function unprocessableResponse(string $message = '', mixed $data = []): JsonResponse
+    /** Status 422 **/
+    public function unprocessableResponse(string $message = null, mixed $data = []): JsonResponse
     {
         return $this->errorResponse($data, $message, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Server Error Responses
+    |--------------------------------------------------------------------------
+    */
+
+    /** Status 500 **/
+    public function internalServerErrorResponse(string $message = null, mixed $data = []): JsonResponse
+    {
+        return $this->errorResponse($data, $message, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
