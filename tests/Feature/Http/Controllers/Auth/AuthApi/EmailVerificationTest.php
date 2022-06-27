@@ -32,7 +32,7 @@ class EmailVerificationTest extends TestCase
 
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
 
-        $response->assertRedirect(config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1');
+        $response->assertRedirect(config('app.frontend_url').RouteServiceProvider::HOME_API.'?verified=1');
     }
 
     /** @test **/
