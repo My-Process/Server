@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthApi\AuthenticatedSessionController;
-use App\Http\Controllers\AuthApi\EmailVerificationNotificationController;
-use App\Http\Controllers\AuthApi\NewPasswordController;
-use App\Http\Controllers\AuthApi\PasswordResetLinkController;
-use App\Http\Controllers\AuthApi\RegisteredUserController;
-use App\Http\Controllers\AuthApi\VerifyEmailController;
+use App\Http\Controllers\Auth\AuthApi\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\AuthApi\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\AuthApi\NewPasswordController;
+use App\Http\Controllers\Auth\AuthApi\PasswordResetLinkController;
+use App\Http\Controllers\Auth\AuthApi\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthApi\VerifyEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +42,6 @@ Route::middleware('auth')->group(function () {
 });
 
 /********* System Routes *********/
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
     return $request->user();
 });
