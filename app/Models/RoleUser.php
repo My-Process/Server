@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PermissionRole extends Pivot
+class RoleUser extends Pivot
 {
     use HasFactory;
 
     protected $fillable = [
-        'permission_id',
+        'user_id',
         'role_id',
     ];
 
@@ -20,8 +20,8 @@ class PermissionRole extends Pivot
         return $this->belongsTo(Role::class);
     }
 
-    public function permission(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Permission::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\Models\HasUuidKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 class Permission extends Model
 {
     use HasFactory;
-    use HasUuidKey;
 
     protected $fillable = [
         'scope',
