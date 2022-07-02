@@ -29,10 +29,10 @@ class Permission extends Model
         return Cache::rememberForever('permissions', fn () => self::all());
     }
 
-    public static function existsOnCache(string $permission)
+    public static function getPermission(int|string $permission)
     {
         return self::getAllFromCache()->filter(function ($value) use ($permission) {
-            return is_numeric($permission) ? $value->id == (int) $permission : $value->name == $permission || $value->slug == $permission;
-        })->isNotEmpty();
+            return $value->id === $permission || $value->slug === $permission;
+        })->first();
     }
 }
