@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 trait ApiResponse
 {
     /** Generate Response Data Array **/
-    protected function generateData(mixed $data, string|null $message, int $statusCode): array
+    private function generateData(mixed $data, string|null $message, int $statusCode): array
     {
         if (!$message) {
             $message = Response::$statusTexts[$statusCode];
@@ -20,16 +20,8 @@ trait ApiResponse
         ];
     }
 
-    /** Generic message for successful Responses **/
-    public function successResponse(mixed $data = [], string $message = null, int $statusCode = Response::HTTP_OK): JsonResponse
-    {
-        $data = $this->generateData($data, $message, $statusCode);
-
-        return new JsonResponse($data, $statusCode);
-    }
-
-    /** Generic message for unsuccessful Responses **/
-    public function errorResponse(mixed $data = [], string $message = null, int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
+    /** Generic message for all Responses **/
+    private function genericResponse(mixed $data = [], string $message = null, int $statusCode = null): JsonResponse
     {
         $data = $this->generateData($data, $message, $statusCode);
 
@@ -45,19 +37,19 @@ trait ApiResponse
     /** Status 200 **/
     public function okResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->successResponse($data, $message, Response::HTTP_OK);
+        return $this->genericResponse($data, $message, Response::HTTP_OK);
     }
 
     /** Status 201 **/
     public function createdResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->successResponse($data, $message, Response::HTTP_CREATED);
+        return $this->genericResponse($data, $message, Response::HTTP_CREATED);
     }
 
     /** Status 204 **/
     public function noContentResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->successResponse($data, $message, Response::HTTP_NO_CONTENT);
+        return $this->genericResponse($data, $message, Response::HTTP_NO_CONTENT);
     }
 
     /*
@@ -69,7 +61,7 @@ trait ApiResponse
     /** Status 302 **/
     public function foundResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_FOUND);
+        return $this->genericResponse($data, $message, Response::HTTP_FOUND);
     }
 
     /*
@@ -81,43 +73,43 @@ trait ApiResponse
     /** Status 400 **/
     public function badRequestResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_BAD_REQUEST);
+        return $this->genericResponse($data, $message, Response::HTTP_BAD_REQUEST);
     }
 
     /** Status 401 **/
     public function unauthorizedResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_UNAUTHORIZED);
+        return $this->genericResponse($data, $message, Response::HTTP_UNAUTHORIZED);
     }
 
     /** Status 403 **/
     public function forbiddenResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_FORBIDDEN);
+        return $this->genericResponse($data, $message, Response::HTTP_FORBIDDEN);
     }
 
     /** Status 404 **/
     public function notFoundResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_NOT_FOUND);
+        return $this->genericResponse($data, $message, Response::HTTP_NOT_FOUND);
     }
 
     /** Status 405 **/
     public function methodNotAllowedResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_METHOD_NOT_ALLOWED);
+        return $this->genericResponse($data, $message, Response::HTTP_METHOD_NOT_ALLOWED);
     }
 
     /** Status 409 **/
     public function conflictResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_CONFLICT);
+        return $this->genericResponse($data, $message, Response::HTTP_CONFLICT);
     }
 
     /** Status 422 **/
     public function unprocessableResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_UNPROCESSABLE_ENTITY);
+        return $this->genericResponse($data, $message, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /*
@@ -129,6 +121,6 @@ trait ApiResponse
     /** Status 500 **/
     public function internalServerErrorResponse(string $message = null, mixed $data = []): JsonResponse
     {
-        return $this->errorResponse($data, $message, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->genericResponse($data, $message, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
