@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('scope');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->unique(['scope', 'name']);
