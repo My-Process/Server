@@ -2,17 +2,16 @@
 
 namespace Tests\Feature\Http\Middleware;
 
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class CheckRoleTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    /** @test **/
+    public function it_should_test(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/login');
 
-        $response->assertStatus(302);
+        $response->assertStatus(Response::HTTP_OK);
     }
 }
