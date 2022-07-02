@@ -17,5 +17,21 @@ class CheckRole
     public function handle(Request $request, Closure $next)
     {
         return $next($request);
+
+        // $authGuard = Auth::guard($guard);
+
+        // if ($authGuard->guest()) {
+        //     throw UnauthorizedException::notLoggedIn();
+        // }
+
+        // $roles = is_array($role)
+        //     ? $role
+        //     : explode('|', $role);
+
+        // if (! $authGuard->user()->hasAnyRole($roles)) {
+        //     throw UnauthorizedException::forRoles($roles);
+        // }
+
+        // return $next($request);
     }
 }
