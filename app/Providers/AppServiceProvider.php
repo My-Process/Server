@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use Laravel\Telescope\Telescope;
@@ -27,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gate::before(function (User $user, $ability) {
+            if (Permission::getPermission($ability)) {
+                return $user->hasPermissionTo($ability);
+            }
+        });
     }
 }
