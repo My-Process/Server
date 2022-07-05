@@ -2,38 +2,32 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\API\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class CheckPermission
 {
+    use ApiResponse;
+
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  string $permissions
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, string $permissions)
     {
+        $permissions = Str::of($permissions)->explode('|')->toArray();
+
+        if (!$request->user()->hasAnyPermission($permissions)) {
+            return $request->expectsJson() ? $this->forbiddenResponse(trans('auth.blocked')) : abort(Response::HTTP_FORBIDDEN);
+        }
+
         return $next($request);
-
-        // $authGuard = app('auth')->guard($guard);
-
-        // if ($authGuard->guest()) {
-        //     throw UnauthorizedException::notLoggedIn();
-        // }
-
-        // $permissions = is_array($permission)
-        //     ? $permission
-        //     : explode('|', $permission);
-
-        // foreach ($permissions as $permission) {
-        //     if ($authGuard->user()->can($permission)) {
-        //         return $next($request);
-        //     }
-        // }
-
-        // throw UnauthorizedException::forPermissions($permissions);
     }
 }
