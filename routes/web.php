@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthWeb\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthWeb\EmailVerificationPromptController;
+use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,6 @@ Route::middleware('auth')->group(function () {
 /********* System Routes *********/
 Route::redirect('/', '/login');
 
-Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth', 'verified', 'roles:administrator'])->group(function () {
+    Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+});
