@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Enums\Models\PermissionEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class PermissionFactory extends Factory
 {
@@ -13,13 +12,10 @@ class PermissionFactory extends Factory
      */
     public function definition(): array
     {
-        $name  = $this->faker->word();
-        $scope = PermissionEnum::getRandomValue();
-
         return [
-            'scope' => $scope,
-            'name'  => $name,
-            'slug'  => Str::slug("{$scope} {$name}"),
+            'scope' => PermissionEnum::getRandomValue(),
+            'name'  => $this->faker->unique()->word(),
+            'slug'  => $this->faker->unique()->slug(),
         ];
     }
 }
