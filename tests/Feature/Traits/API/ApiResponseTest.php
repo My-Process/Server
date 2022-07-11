@@ -25,7 +25,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[200], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[200]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -45,7 +45,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[201], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[201]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -65,7 +65,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[204], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[204]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -85,7 +85,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[302], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[302]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -105,7 +105,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[400], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[400]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -125,7 +125,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[401], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[401]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -145,7 +145,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[403], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[403]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -165,7 +165,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[404], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[404]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -185,7 +185,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[405], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[405]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -205,7 +205,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_CONFLICT, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[409], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[409]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -225,7 +225,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[422], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[422]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
@@ -245,7 +245,7 @@ class ApiResponseTest extends TestCase
 
         $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
 
-        $content = ['message' => Response::$statusTexts[500], 'data' => []];
+        $content = ['message' => trans(Response::$statusTexts[500]), 'data' => []];
 
         $this->assertEquals(json_encode($content), $response->getContent());
     }
