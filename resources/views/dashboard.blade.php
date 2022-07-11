@@ -6,7 +6,10 @@
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
                             <h2 class="text-center text-3xl font-extrabold text-gray-900">
-                                <b class="text-amber-600">{{ __('My') }}</b>&nbsp{{ __('Process') }}
+                                <b class="text-amber-600">
+                                    {{ trans('My') }}
+                                </b>
+                                {{ trans('Process') }}
                             </h2>
                         </div>
                     </div>
@@ -21,12 +24,12 @@
                                 <i class="fa-solid fa-angle-down fa-lg ml-2 text-gray-400"></i>
                             </button>
                             <x-slot name="infos">
-                                <x-dropdown.info title="{{ user()->name }}" />
+                                <x-dropdown.info title="{!! user()->name !!}" />
                             </x-slot>
                             <x-slot name="links">
                                 <form method="post" action="{{ route('logout', null, false) }}">
                                     @csrf
-                                    <x-dropdown.button title="Sair" icon="fa fa-sign-out-alt" />
+                                    <x-dropdown.button title="{{ trans('Log out') }}" icon="fa fa-sign-out-alt" />
                                 </form>
                             </x-slot>
                         </x-dropdown>
@@ -38,7 +41,7 @@
         <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Dashboard') }}
+                    {{ trans('Dashboard') }}
                 </h2>
             </div>
         </header>
@@ -48,15 +51,15 @@
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <div class="space-y-6">
                         {{-- Redirect Horizon --}}
-                        <x-button href="{{ route('horizon.index') }}" size="3xl" color="purple"
-                            class="w-full justify-center">
-                            {{ __('Horizon') }}
+                        <x-button href="{{ url('/horizon') }}" size="3xl" color="purple"
+                            class="w-full justify-center" target="__blank">
+                            Horizon
                         </x-button>
 
                         {{-- Redirect Telescope --}}
-                        <x-button href="{{ route('telescope') }}" size="3xl" color="cyan"
-                            class="w-full justify-center">
-                            {{ __('Telescope') }}
+                        <x-button href="{{ url('telescope') }}" size="3xl" color="cyan"
+                            class="w-full justify-center" target="__blank">
+                            Telescope
                         </x-button>
                     </div>
                 </div>
