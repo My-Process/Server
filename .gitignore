@@ -1,5 +1,6 @@
 # Custom Directories
 /public/css
+/public/fonts
 /public/js
 /public/sass
 .php-cs-fixer.cache

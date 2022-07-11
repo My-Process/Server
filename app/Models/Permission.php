@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\Models\HasUuidKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 class Permission extends Model
 {
     use HasFactory;
-    use HasUuidKey;
 
     protected $fillable = [
         'scope',
@@ -31,10 +29,10 @@ class Permission extends Model
         return Cache::rememberForever('permissions', fn () => self::all());
     }
 
-    public static function existsOnCache(string $permission)
+    public static function getPermission(int|string $permission)
     {
         return self::getAllFromCache()->filter(function ($value) use ($permission) {
-            return is_numeric($permission) ? $value->id == (int) $permission : $value->name == $permission || $value->slug == $permission;
-        })->isNotEmpty();
+            return $value->id === $permission || $value->slug === $permission;
+        })->first();
     }
 }

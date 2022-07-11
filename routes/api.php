@@ -20,28 +20,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/********* Authentication API Routes *********/
-Route::middleware('guest')->group(function () {
-    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+Route::localized(function () {
+    /********* Authentication API Routes *********/
+    Route::middleware('guest')->group(function () {
+        Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+        Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::middleware('throttle:6,1')->group(function () {
-        Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed'])->name('verification.verify');
-
-        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->name('verification.send');
+        Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
     });
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
+    Route::middleware('auth')->group(function () {
+        Route::middleware('throttle:6,1')->group(function () {
+            Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed'])->name('verification.verify');
 
-/********* System Routes *********/
-Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
-    return $request->user();
+            Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->name('verification.send');
+        });
+
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    });
+
+    /********* System Routes *********/
+    Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

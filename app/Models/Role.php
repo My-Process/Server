@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Models\HasUuidKey;
+use App\Traits\Models\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,13 +11,20 @@ use Illuminate\Support\Facades\Cache;
 class Role extends Model
 {
     use HasFactory;
-    use HasUuidKey;
+    use HasPermissions;
 
     protected $fillable = [
         'name',
         'type',
         'description',
     ];
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->using(RoleUser::class)
+            ->withTimestamps();
+    }
 
     public function permissions(): BelongsToMany
     {
@@ -31,19 +38,10 @@ class Role extends Model
         return Cache::rememberForever('roles', fn () => self::all());
     }
 
-    public static function getRole(string $role)
+    public static function getRole(int|string $role)
     {
         return self::getAllFromCache()->filter(function ($value) use ($role) {
-            return is_numeric($role) ? $value->id == (int) $role : $value->name == $role || $value->slug == $role;
+            return $value->id === $role || $value->name === $role || $value->slug === $role;
         })->first();
-    }
-
-    public function hasPermissionTo(string $permission): bool
-    {
-        $permissionsOfRole = Cache::rememberForever('permissions::of::role::'.$this->id, fn () => $this->permissions()->get());
-
-        return $permissionsOfRole->filter(function ($value) use ($permission) {
-            return is_numeric($permission) ? $value->id == (int) $permission : $value->name == $permission || $value->slug == $permission;
-        })->isNotEmpty();
     }
 }

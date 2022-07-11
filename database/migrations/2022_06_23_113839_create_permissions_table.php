@@ -12,10 +12,9 @@ return new class () extends Migration {
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->uuid();
             $table->string('scope');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->unique(['scope', 'name']);

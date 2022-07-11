@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PermissionRoleFactory extends Factory
@@ -12,7 +14,8 @@ class PermissionRoleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'permission_id' => Permission::factory(),
+            'role_id'       => Role::factory(),
         ];
     }
 }
