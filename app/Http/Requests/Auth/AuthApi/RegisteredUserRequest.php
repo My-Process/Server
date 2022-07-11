@@ -18,4 +18,16 @@ class RegisteredUserRequest extends FormRequest
             'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'name'     => trans('Name'),
+            'email'    => trans('Email'),
+            'password' => trans('Password'),
+        ];
+    }
 }

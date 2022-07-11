@@ -18,4 +18,16 @@ class NewPasswordRequest extends FormRequest
             'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'token'    => trans('Token'),
+            'email'    => trans('Email'),
+            'password' => trans('Password'),
+        ];
+    }
 }

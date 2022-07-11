@@ -15,4 +15,14 @@ class PasswordLinkRequest extends FormRequest
             'email' => 'required|email',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'email' => trans('Email'),
+        ];
+    }
 }
