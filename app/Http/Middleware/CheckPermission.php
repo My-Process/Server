@@ -24,7 +24,7 @@ class CheckPermission
     {
         $permissions = Str::of($permissions)->explode('|')->toArray();
 
-        if (!$request->user()->hasAnyPermission($permissions)) {
+        if (!$request->user()->canAny($permissions)) {
             return $request->expectsJson() ? $this->forbiddenResponse(trans('auth.blocked')) : abort(Response::HTTP_FORBIDDEN);
         }
 
