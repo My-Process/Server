@@ -11,7 +11,7 @@ trait ApiResponse
     private function generateData(mixed $data, string|null $message, int $statusCode): array
     {
         if (!$message) {
-            $message = Response::$statusTexts[$statusCode];
+            $message = trans(Response::$statusTexts[$statusCode]);
         }
 
         return [
