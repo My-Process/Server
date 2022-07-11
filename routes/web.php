@@ -16,22 +16,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/********* Authentication Routes *********/
-Route::middleware('guest')->group(function () {
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::localized(function () {
+    /********* Authentication Routes *********/
+    Route::middleware('guest')->group(function () {
+        Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-});
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    });
 
-Route::middleware('auth')->group(function () {
-    Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
+    Route::middleware('auth')->group(function () {
+        Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    });
 
-/********* System Routes *********/
-Route::redirect('/', '/login');
+    /********* System Routes *********/
+    Route::redirect('/', '/login');
 
-Route::middleware(['auth', 'verified', 'roles:administrator'])->group(function () {
-    Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+    Route::middleware(['auth', 'verified', 'roles:administrator'])->group(function () {
+        Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+    });
 });
