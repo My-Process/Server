@@ -1,4 +1,4 @@
-# Formoney Management System
+# My Process System
 
 Installed packages:
 
@@ -11,8 +11,8 @@ Installed packages:
 
 For the pages we create to authenticate for access to Horizon and Telescope, we use:
 
-- Tailwind UI
-- Alpine JS
+- [Tailwind UI](https://tailwindcss.com/docs/installation)
+- [Alpine JS](https://alpinejs.dev/start-here)
 
 ## About this project
 
